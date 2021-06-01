@@ -1,0 +1,59 @@
+﻿<Window x:Class="proyecto_admin.Vistas.InfoCreacionEventos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyecto_admin.Vistas"
+        mc:Ignorable="d"
+        Title="InfoCreacionEventos" Height="680" Width="800">
+    <Grid>
+        <Image Source="/proyecto_admin;component/img/fondo-suelo-madera-clara_1249-14.jpg" Stretch="Fill" />
+        <Border BorderBrush="Red" BorderThickness="4" Grid.Row="5" Grid.ColumnSpan="6" Grid.RowSpan="2" Width="790" Margin="0">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/proyecto_admin;component/img/240px-Info_icon_002.svg.png"  Height="40" Margin="20,10,10,10" />
+                    <Label Content="INFORMACIÓN CREACIÓN DE EVENTOS" Height="40"  FontSize="22" Margin="20,0,0,0" Width="480" HorizontalContentAlignment="Left"></Label>
+                    <Label Content="(PAGINA 1)" Margin="0,0,10,0" />
+                </StackPanel>
+                <Border BorderBrush="Red" BorderThickness="2"/>
+
+                <StackPanel Orientation="Vertical">
+                    <Label Width="780" Height="35" Margin="20,0,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Left">
+                        <TextBlock Width="420" TextAlignment="Left" FontSize="16"  FontStyle="Italic" Margin="10,0,0,0" ><Run Text="PUEDES CREAR EVENTOS DE DOS FORMAS"/><Run Text=":"/><LineBreak/><Run Text=" "/></TextBlock>
+                    </Label>
+                    <Label Width="780" Height="35" Margin="20,0,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FFA62828" FontStyle="Italic" FontWeight="Bold">
+                        <TextBlock Text="-1) USANDO UN EVENTO YA CREADO:  " Width="420" TextAlignment="Left" FontSize="16" TextDecorations="Underline" />
+                    </Label>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Elije uno de los eventos que no este activo de entre los que hayan en la lista.                                                                        
+                                              " TextWrapping="WrapWithOverflow" Width="540" TextAlignment="Left" FontSize="15" Margin="10,5,10,0" FontWeight="Bold"/>
+                </StackPanel>
+                <Image Source="/proyecto_admin;component/img/EVENTOS.JPG" Width="760"/>
+                <TextBlock Text="Una vez selecionado podrás editarlo a tu gusto (Cambiar nombre, zonas, aforos, etc). Una vez lo tengas todo a tu gusto pulsa el botón GUARDAR EVENTO y a continuación ACTIVAR evento si deseas iniciarlo. Una vez guardado un Evento podrás acceder a él las veces que desees para editarlo antes de activarlo.              ATENCIÓN: UN EVENTO ACTIVO NO ES EDITABLE EN ESTE ENTORNO. PUEDES EDITARLO EN LA PESTAÑA DE GESTIÓN DE EVENTOS ACTIVOS." TextWrapping="WrapWithOverflow" Width="760" TextAlignment="Left" FontSize="15" Margin="10,5,10,0" FontWeight="Bold"/>
+                <Border BorderBrush="Red" BorderThickness="2"/>
+                <StackPanel Orientation="Vertical" Height="180">
+                    <Label Width="780" Height="35" Margin="20,0,0,0" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FFA62828" FontStyle="Italic" FontWeight="Bold">
+                        <TextBlock Text="-2) CREANDO EL EVENTO DESDE CERO:  " Width="420" TextAlignment="Left" FontSize="16" TextDecorations="Underline" />
+                    </Label>
+                    <StackPanel Orientation="Horizontal" Height="55">
+                        <TextBlock Text="Rellena los campos obligatorios (Nombre de Evento, Dirección, Fecha del Evento, Hora de Inicio y Fin del Evento) A continuación se ve un dibujo de los campos a rellenar.  
+                         " TextWrapping="WrapWithOverflow" Width="750" TextAlignment="Left" FontSize="15" Margin="10,5,10,10" Height="55" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                        <Image Source="/proyecto_admin;component/img/evento2.JPG" Height="80" Width="240"/>
+                        <TextBlock TextWrapping="WrapWithOverflow" Width="500" TextAlignment="Left" FontSize="15" Margin="10,5,10,10" Height="80" FontWeight="Bold"><Run Text="Después de rellenar los campos obligatorios deberás crear al menos una Zona. Para aprender  a crear zonas te aconsejo que mires la PÁGINA DE AYUDA 2. Una vez creada una zona podrás dar de alta el Evento"/><Run Text=" y activarlo si es lo que deseas. "/><Run Text=" "/><Run Text="                            "/></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--#endregion-->
+                <Border BorderBrush="Red" BorderThickness="2"/>
+                <StackPanel Orientation="Horizontal" Margin="200,10,0,0">
+                <Button x:Name="btnInfo2" Height="40" Content="PAGINA DE AYUDA 2" Width="150" Click="btnInfo2_Click"/>
+                    <Button x:Name="btnSalir" Height="40" Content="SALIR" Width="150" Margin="60,0,0,0" Background="Red" Click="btnSalir_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

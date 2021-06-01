@@ -1,0 +1,732 @@
+﻿<Window x:Class="proyecto_admin.Vistas.GestionEventos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyecto_admin.Vistas"
+        mc:Ignorable="d"
+        Title="Gestión de Eventos" Height="738" Width="1368"
+        WindowState="Maximized">
+    <TabControl>
+        <TabItem Header="Gestión de Eventos Activos">
+            <Grid Margin="0">
+                <Image Source="/proyecto_admin;component/img/fondo-suelo-madera-clara_1249-14.jpg" Grid.ColumnSpan="2" Stretch="Fill" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="880"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="-5,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="890"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="480"/>
+                            <RowDefinition Height="140"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Height="60" Margin="120,0,0,0">
+                            <Label Content="GESTIÓN DE EVENTOS ACTIVOS" Grid.Row="0"  HorizontalAlignment="Center" FontWeight="Bold" Margin="0" FontFamily="Verdana Pro Black" FontSize="30"/>
+                            <Button x:Name="btnInfo" Background="Transparent" Click="btnInfo_Click" Height="60" Margin="0"  >
+                                <Image x:Name="ingInfo" Source="/proyecto_admin;component/img/240px-Info_icon_002.svg.png"  Height="40"/>
+                            </Button>
+                            <TextBlock Text="Pulsar para información de uso" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Width="120" FontSize="12" TextAlignment="Left" Margin="0,15" FontWeight="Bold" Foreground="Blue"/>
+                        </StackPanel>
+                        <Border Width="850" Height="480" BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" Grid.Row="1">
+                            <Canvas Width="840" Height="470" x:Name="LienzoClave" Background="White" Opacity="0.5" HorizontalAlignment="Left" VerticalAlignment="Top" MouseMove="LienzoClave_MouseMove" MouseLeftButtonDown="LienzoClave_MouseLeftButtonDown"  MouseLeftButtonUp="LienzoClave_MouseLeftButtonUp" />
+                        </Border>
+                        <Border Grid.Row="2" Width="850" Height="135" BorderBrush="Black" BorderThickness="2" Margin="10,0" >
+                            <Grid Height="130" Background="Bisque" Width="870" Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="173*"/>
+                                </Grid.ColumnDefinitions>
+                                <DataGrid x:Name="DataEventos" IsReadOnly="True" AutoGenerateColumns="False" Height="130" Width="845" CanUserSortColumns="False" Margin="-25,0,0,0" SelectionChanged="DataEventos_SelectionChanged" >
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="FontSize" Value="12"/>
+                                            <Setter Property="FontFamily" Value="DejaVu Serif Condensed"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="Background" Value="Black"/>
+                                            <Setter Property="BorderBrush" Value="black"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="Margin" Value="-7,0,0,0"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding paintingEvento}"  Value="25">
+                                                    <Setter Property="Background" Value="#FF0FEC0F"/>
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding paintingEvento}"  Value="35">
+                                                    <Setter Property="Background" Value="#FF078107"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding paintingEvento}"  Value="55">
+                                                    <Setter Property="Background" Value="#FFE0F50C"/>
+                                                    <Setter Property="Foreground" Value="Black"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding paintingEvento}"  Value="75">
+                                                    <Setter Property="Background" Value="#FFF5800C"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding paintingEvento}"  Value="90">
+                                                    <Setter Property="Background" Value="#FFF50C0C"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.RowStyle>
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.CellStyle>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn x:Name="dataIdEvento"  Width="25" CanUserResize="False" Binding="{Binding idEvento }">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Nº" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataNombreEvento"  Width="300" CanUserResize="False" Binding="{Binding nombreEvento }">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Nombre del Evento" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataDirecionEvento" Width="215" CanUserResize="False" Binding="{Binding direccionEvento}" Visibility="Hidden">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Dirección" TextWrapping="Wrap" FontFamily="Aharoni"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataFechaEvento"  Width="70" CanUserResize="False" Binding="{Binding fechaEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Fecha Inicio" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataHoraInicioEvento" Width="40" CanUserResize="False" Binding="{Binding horaInicioEvento}" >
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Hora     Inicio" TextWrapping="Wrap" Margin="-10,0" FontFamily="Aharoni"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataFechaFinEvento"  Width="70" CanUserResize="False" Binding="{Binding fechaEventoFin}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Fecha Fin" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataHoraFinEvento"  Width="40" CanUserResize="False" Binding="{Binding horaFinEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Hora Fin" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataZonasEvento"  Width="35" CanUserResize="False" Binding="{Binding zonasEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Nº Zonas" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataAforoEvento"  Width="41" CanUserResize="False" Binding="{Binding aforoEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Aforo" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataGenteEvento"  Width="40" CanUserResize="False" Binding="{Binding genteEnEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Ocupa ción (PAX)" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataGenteEventoPorcentaje"  Width="55" CanUserResize="False" Binding="{Binding porcentageOcupacionEvento, StringFormat={}{0:0.00}%}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Ocupa  ción           %" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataVisitasEvento"  Width="45" CanUserResize="False" Binding="{Binding visitasEvento}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Visitas Evento" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataActivoEvento"  Width="25" CanUserResize="False" Binding="{Binding activoEvento}" Visibility="Hidden">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Acti    vo" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn x:Name="dataPaintingEvento" Header="Paint" CanUserResize="False" Binding="{Binding paintingEvento}" Visibility="Hidden"/>
+                                    </DataGrid.Columns>
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="FontFamily" Value="Aharoni"/>
+                                            <Setter Property="Height" Value="37"/>
+                                            <Setter Property="Background" Value="Gray"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="FontSize" Value="10"/>
+                                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                                            <Setter Property="BorderBrush" Value="Blue"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                        </Style>
+                                    </DataGrid.ColumnHeaderStyle>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="-15,10,10,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="110"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="160"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal"  Grid.ColumnSpan="6">
+                            <Label HorizontalAlignment="Right" Height="40" Margin="0,0,10,0">
+                                <TextBlock Text="Nombre Evento" TextWrapping="WrapWithOverflow" Height="35" Width="55" FontSize="11" FontWeight="Bold" Margin="15,0,0,0" />
+                            </Label>
+                            <TextBox x:Name="txtNombreEvento" Width="275" Height="30" Margin="0,0,5,0" FontSize="14" VerticalContentAlignment="Center" TextWrapping="Wrap"/>
+                            <Label HorizontalAlignment="Right" Height="50" Margin="0,-5,0,0" Width="70">
+                                <TextBlock Text="Evento Activo" TextWrapping="WrapWithOverflow" Height="40" Width="55" FontSize="11" FontWeight="Bold" Margin="5,2,0,0" />
+                            </Label>
+                            <ComboBox x:Name="comboEventoActivo"  Height="25"  Margin="-15,5,0,5" FontSize="14" IsReadOnly="True" IsEnabled="False">
+                                <ComboBoxItem Content="No" IsSelected="True"/>
+                                <ComboBoxItem Content="Si"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="6">
+                            <Label HorizontalAlignment="Right" Height="40" Margin="0,0,10,0">
+                                <TextBlock Text="Dirección Evento" TextWrapping="WrapWithOverflow" Height="35" Width="55" FontSize="11" FontWeight="Bold" Margin="15,-5,0,0" />
+                            </Label>
+                            <TextBox x:Name="txtDireccionEvento" Width="260"  Height="30" Margin="0,0,10,0" VerticalContentAlignment="Center" TextWrapping="Wrap" FontSize="11"/>
+                            <TextBlock Text="Zonas del Evento" TextWrapping="WrapWithOverflow" Height="40" Width="55" FontSize="11" FontWeight="Bold" Margin="10,2,5,0" />
+                            <TextBox x:Name="txtNumeroZonas" FontSize="14" Grid.Row="4" Grid.Column="5" Height="25" Width="40" Margin="0,2,20,0" IsReadOnly="True"  Background="#D5D2D1">
+                                <TextBox.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Solo lectura</TextBlock>
+                                    </StackPanel>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="6">
+                            <Border BorderBrush="Red" BorderThickness="2" Margin="15,5,0,0" Height="30" Width="150">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnEventoAmp" Background="Transparent" Height="25" Margin="5,0,0,0" Click="btnEventoAmp_Click" >
+                                        <Image x:Name="ingInfoEventoAmp" Source="/proyecto_admin;component/img/240px-Info_icon_002.svg.png"  Height="25"/>
+                                    </Button>
+                                    <Label HorizontalAlignment="Right" Height="50" Width="150" Margin="-10,-10,10,0">
+                                        <TextBlock Text="Información ampliada Evento" TextWrapping="WrapWithOverflow" Height="40" Width="145" FontSize="11" FontWeight="Bold" Margin="5,3,0,0" Foreground="Blue" />
+                                    </Label>
+                                </StackPanel>
+                            </Border>
+                            <Label FontSize="18" Height="50" Width="65" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Ocupación (Pax)" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtOcupacionPaxEvento" Grid.Row="0" Grid.Column="3" Width="50" Height="28" VerticalContentAlignment="Center" Margin="-10,4,0,0" FontSize="11" IsReadOnly="True"/>
+                            <Label FontSize="18" Height="50" Width="65" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Ocupación %" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtOcupacionPorcentajEvento" Grid.Row="0" Grid.Column="3" Width="50" Height="28" VerticalContentAlignment="Center" Margin="-10,4,0,0" FontSize="11" IsReadOnly="True"/>
+                            <Label FontSize="18" Height="50" Width="45" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Visitas Evento" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtVisitasEvento" Grid.Row="0" Grid.Column="3" Width="50" Height="28" VerticalContentAlignment="Center" Margin="-10,4,0,0" FontSize="11" IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="0">
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="20,0,5,0">
+                                <TextBlock Text="Fecha Inicio" TextWrapping="WrapWithOverflow" Height="40" Width="40" FontSize="11" Margin="-3,-2,0,0"/>
+                            </Label>
+                            <DatePicker Grid.Row="3" Height="25" Width="95" CalendarStyle="{StaticResource styleCalendar}"  x:Name="datePickerEvento"  VerticalAlignment="Center" RenderTransformOrigin="0.524,0.925"  SelectedDate="{x:Static sys:DateTime.Now}" FontSize="12" BorderThickness="0" Background="White" Margin="0,0,10,0"/>
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                <TextBlock Text="Hora Inicio" TextWrapping="WrapWithOverflow" Height="40" Width="45" FontSize="11"  Margin="0,-2,0,0"/>
+                            </Label>
+                            <ComboBox x:Name="comboHoraInicio" Height="25"  Margin="0,5,0,5" FontSize="12" Width="53">
+                                <ComboBoxItem Content="Hora" IsSelected="True"/>
+                                <ComboBoxItem Content="0"/>
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                                <ComboBoxItem Content="13"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="16"/>
+                                <ComboBoxItem Content="17"/>
+                                <ComboBoxItem Content="18"/>
+                                <ComboBoxItem Content="19"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="21"/>
+                                <ComboBoxItem Content="22"/>
+                                <ComboBoxItem Content="23"/>
+                            </ComboBox>
+                            <ComboBox Name="comboMinutosInicio" Height="25" Margin="0,5,0,5" FontSize="12">
+                                <ComboBoxItem Content="Minutos" IsSelected="True"/>
+                                <ComboBoxItem Content="00"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="45"/>
+                            </ComboBox>
+                            <Label Content="Metros2" Grid.Column="4" Grid.Row="3" Margin="0,5,5,0" HorizontalAlignment="Right" FontSize="11"/>
+                            <TextBox x:Name="txtMts2" Width="75" FontSize="14" Grid.Row="3" Grid.Column="5" Height="25" Margin="0,0,20,0" IsReadOnly="True"  Background="#D5D2D1">
+                                <TextBox.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Solo lectura</TextBlock>
+                                    </StackPanel>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="6">
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="20,0,5,0">
+                                <TextBlock Text="Fecha Fin" TextWrapping="WrapWithOverflow" Height="40" Width="45" FontSize="11" Margin="-3,-2,0,0"/>
+                            </Label>
+                            <DatePicker Grid.Row="3" Height="25" Width="95" CalendarStyle="{StaticResource styleCalendar}"  x:Name="datePickerEventoFin"  VerticalAlignment="Center" RenderTransformOrigin="0.524,0.925"  SelectedDate="{x:Static sys:DateTime.Now}" FontSize="12" BorderThickness="0" Background="White" Margin="0,0,11,0"/>
+                            <Label FontSize="18" Height="50" Width="38" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Hora Fin" TextWrapping="WrapWithOverflow" Height="45" Width="35" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <ComboBox Name="comboHoraFin" Height="25" Margin="0,5,0,5" FontSize="12" Width="53">
+                                <ComboBoxItem Content="Hora" IsSelected="True"/>
+                                <ComboBoxItem Content="0"/>
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                                <ComboBoxItem Content="13"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="16"/>
+                                <ComboBoxItem Content="17"/>
+                                <ComboBoxItem Content="18"/>
+                                <ComboBoxItem Content="19"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="21"/>
+                                <ComboBoxItem Content="22"/>
+                                <ComboBoxItem Content="23"/>
+                            </ComboBox>
+                            <ComboBox Name="comboMinutosFin" Height="25" Margin="0,5,0,5" FontSize="12">
+                                <ComboBoxItem Content="Minutos" IsSelected="True"/>
+                                <ComboBoxItem Content="00"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="45"/>
+                            </ComboBox>
+                            <Label Content="Aforo" Margin="10,5,15,0" HorizontalAlignment="Right" FontSize="11"/>
+                            <TextBox x:Name="txtAforo" Width="77" FontSize="14" Grid.Row="3" Grid.Column="5" Height="25" Margin="-10,0,5,0" IsReadOnly="True" Background="#D5D2D1">
+                                <TextBox.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Solo lectura</TextBlock>
+                                    </StackPanel>
+                                </TextBox.ToolTip>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="5" Grid.ColumnSpan="6" Margin="0,5,0,0">
+                            <StackPanel Orientation="Vertical">
+                                <Border BorderBrush="Black" BorderThickness="1" Width="450"/>
+                                <Label  Foreground="Red" Margin="0,-5,0,0" Height="35" Content="Área de gestión de Zonas" HorizontalAlignment="center" FontSize="19"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0" Height="35">
+                                    <Label Margin="15,0" Width="70" HorizontalContentAlignment="Left">
+                                        <TextBlock Text="Nombre Zona" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Width="50" FontSize="11" TextAlignment="Left" Margin="0,-5"/>
+                                    </Label>
+                                    <TextBox x:Name="txtNambreZona"  Height="25" Width="280" FontSize="14" Text="Opcional" VerticalContentAlignment="Center" PreviewMouseLeftButtonDown="txtNambreZona_PreviewMouseLeftButtonDown" Margin="-15,-3,0,0" />
+                                    <Label Margin="20,0,-10,0" Width="55" HorizontalContentAlignment="Left" >
+                                        <TextBlock Text="Zona Activa" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Width="50" FontSize="11" TextAlignment="Left" Margin="0,-5"/>
+                                    </Label>
+                                    <TextBox x:Name="txtZonaActiva"  Height="25" Width="40" FontSize="16" VerticalContentAlignment="Center"  PreviewMouseLeftButtonDown="txtNambreZona_PreviewMouseLeftButtonDown" IsReadOnly="True" Background="#D5D2D1">
+                                        <TextBox.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Solo lectura</TextBlock>
+                                            </StackPanel>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Height="45">
+                                    <Label Margin="15,0,20,5" Width="60" HorizontalContentAlignment="Left"  >
+                                        <TextBlock Text="Interior/Exterior" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Width="50" FontSize="11" TextAlignment="Left" Margin="0,-5"/>
+                                    </Label>
+                                    <ComboBox Name="comboSituacionZona" Height="30" Width="70"  Margin="-20,-10,0,5" FontSize="12">
+                                        <ComboBoxItem Content="Interior" IsSelected="True" />
+                                        <ComboBoxItem Content="Exterior" />
+                                    </ComboBox>
+                                    <Label FontSize="11" Margin="5,-15,15,0" Width="50">
+                                        <TextBlock Text="Metros2 Útiles" TextWrapping="WrapWithOverflow" Width="50" Height="35" FontSize="11" TextAlignment="Left" Margin="0,0,-5,0" />
+                                    </Label>
+                                    <TextBox x:Name="txtMtsZona" Grid.Row="0" Grid.Column="3" Width="60" Height="28" VerticalContentAlignment="Center" Margin="-10,-15,0,0" />
+                                    <Button x:Name="btnActivarZona" Width="160" Margin="50,-10,0,0"  Click="btnActivarZona_Click" Height="30" Background="Red" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="   Activar Desactivar Zona" HorizontalAlignment="Center" TextWrapping="Wrap" FontSize="9" TextAlignment="Center" Width="90" />
+                                            <Image Source="/proyecto_admin;component/img/warning.png" Height="20"/>
+                                        </StackPanel>
+                                    </Button>
+                                    
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Grid.ColumnSpan="6" Orientation="Horizontal">
+                            <Border BorderBrush="Red" BorderThickness="2" Height="40" Margin="5,0,10,0" Width="290">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/proyecto_admin;component/img/240px-Info_icon_002.svg.png" Stretch="Fill" Height="25" Width="25" Margin="5,5">
+                                        <Image.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Información sobre calculo de aforos</TextBlock>
+                                                <TextBlock TextWrapping="WrapWithOverflow" Height="240" Width="240">
+                                                Rellena los metros cuadrados útiles y calcularemos el Aforo estimado teniendo en cuenta que la distancia de seguridad entre usuarios tiene que ser de dos metros. El cálculo se trata de una mera estimación. Deberás rellenar el campo de Aforo Decidido para dar de alta la zona.
+                                                </TextBlock>
+                                                <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
+                                            </StackPanel>
+                                        </Image.ToolTip>
+                                    </Image>
+                                    <Label FontSize="10" Margin="-5" Width="55">
+                                        <TextBlock Text="Aforo Estimado" TextWrapping="WrapWithOverflow" Width="45" FontSize="10" TextAlignment="Left" Foreground="Blue"/>
+                                    </Label>
+                                    <TextBox x:Name="txtAforoEstimado" Grid.Row="0" Grid.Column="3" Height="25" Width="50"  FontSize="14" Foreground="Orange" VerticalContentAlignment="Center" IsReadOnly="True"  Background="#D5D2D1">
+                                        <TextBox.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5">Solo lectura</TextBlock>
+                                            </StackPanel>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    <Label FontSize="18" Height="40" Width="45" HorizontalAlignment="Right" Margin="0,0,-10,0" HorizontalContentAlignment="Right">
+                                        <TextBlock Text="% Aforo" TextWrapping="WrapWithOverflow" Height="35" Width="35" FontSize="10" Margin="0,0,0,0" Foreground="Blue"/>
+                                    </Label>
+                                    <ComboBox Name="comboAforoPorcentaje" Height="25" Margin="0,5,0,5" FontSize="10" Width="45">
+                                        <ComboBoxItem Content="100" IsSelected="True"/>
+                                        <ComboBoxItem Content="95"/>
+                                        <ComboBoxItem Content="90"/>
+                                        <ComboBoxItem Content="85"/>
+                                        <ComboBoxItem Content="80"/>
+                                        <ComboBoxItem Content="75"/>
+                                        <ComboBoxItem Content="70"/>
+                                        <ComboBoxItem Content="65"/>
+                                        <ComboBoxItem Content="60"/>
+                                        <ComboBoxItem Content="55"/>
+                                        <ComboBoxItem Content="50"/>
+                                        <ComboBoxItem Content="45"/>
+                                        <ComboBoxItem Content="40"/>
+                                        <ComboBoxItem Content="35"/>
+                                        <ComboBoxItem Content="30"/>
+                                        <ComboBoxItem Content="25"/>
+                                        <ComboBoxItem Content="20"/>
+                                        <ComboBoxItem Content="15"/>
+                                        <ComboBoxItem Content="10"/>
+                                        <ComboBoxItem Content="5"/>
+                                    </ComboBox>
+                                    <Button x:Name="btnEstimarAforoZona" Width="60" Margin="10,0,0,0"  Click="btnEstimarAforoZona_Click"  Height="30">
+                                        <TextBlock Text="Estimar Aforo de Zona"  HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="8" TextAlignment="Center"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                            <Label FontSize="16" Margin="-12,-5,-4,0" Width="65">
+                                <TextBlock Text="Aforo Decidido" TextWrapping="WrapWithOverflow" Width="55" Height="35" FontSize="11" TextAlignment="Left"/>
+                            </Label>
+                            <TextBox x:Name="txtAforoIncluidoZona" Grid.Row="0" Grid.Column="3" Height="25" Width="45" FontSize="12" VerticalContentAlignment="Center" Margin="-10,-5,0,0"/>
+                            <Label FontSize="18" Height="50" Width="45" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Visitas Zona" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtVisitasZona" Grid.Row="0" Grid.Column="3" Width="50" Height="25" VerticalContentAlignment="Center" Margin="-10,-5,0,0" FontSize="12" IsReadOnly="True"/>
+                            <TextBlock x:Name="txtIdzona" Visibility="Hidden"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="6" Margin="0,-55,0,0">
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="20,0,5,0">
+                                <TextBlock Text="Fecha Inicio" TextWrapping="WrapWithOverflow" Height="40" Width="40" FontSize="11" Margin="-3,-2,0,0"/>
+                            </Label>
+                            <DatePicker Grid.Row="3" Height="25" Width="95" CalendarStyle="{StaticResource styleCalendar}"  x:Name="datePickerZona"  VerticalAlignment="Center" RenderTransformOrigin="0.524,0.925"  SelectedDate="{x:Static sys:DateTime.Now}" FontSize="12" BorderThickness="0" Background="White" Margin="0,0,10,0"/>
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="0,0,5,0">
+                                <TextBlock Text="Hora Inicio" TextWrapping="WrapWithOverflow" Height="40" Width="45" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <ComboBox x:Name="comboHoraZonaInicio" Height="25"  Margin="0,5,0,5" FontSize="12" Width="53">
+                                <ComboBoxItem Content="Hora" IsSelected="True"/>
+                                <ComboBoxItem Content="0"/>
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                                <ComboBoxItem Content="13"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="16"/>
+                                <ComboBoxItem Content="17"/>
+                                <ComboBoxItem Content="18"/>
+                                <ComboBoxItem Content="19"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="21"/>
+                                <ComboBoxItem Content="22"/>
+                                <ComboBoxItem Content="23"/>
+                            </ComboBox>
+                            <ComboBox Name="comboMinutosZonaInicio" Height="25" Margin="0,5,0,5" FontSize="12">
+                                <ComboBoxItem Content="Minutos" IsSelected="True"/>
+                                <ComboBoxItem Content="00"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="45"/>
+                            </ComboBox>
+                            <Label FontSize="18" Height="50" Width="65" HorizontalAlignment="Right" Margin="0,10,10,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Ocupación %" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtOcupacionPorcentajeZona" Grid.Row="0" Grid.Column="3" Width="50" Height="22" VerticalContentAlignment="Center" Margin="-10,0,0,0" FontSize="11" IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="7" Margin="0">
+                            <Label Height="45" Width="40" HorizontalAlignment="Right" Margin="20,0,5,0">
+                                <TextBlock Text="Fecha Fin" TextWrapping="WrapWithOverflow" Height="40" Width="45" FontSize="11" Margin="-3,-2,0,0"/>
+                            </Label>
+                            <DatePicker Grid.Row="3" Height="25" Width="95" CalendarStyle="{StaticResource styleCalendar}"  x:Name="datePickerZonaFin"  VerticalAlignment="Center" RenderTransformOrigin="0.524,0.925"  SelectedDate="{x:Static sys:DateTime.Now}" FontSize="12" BorderThickness="0" Background="White" Margin="0,5,11,0"/>
+                            <Label FontSize="18" Height="50" Width="38" HorizontalAlignment="Right" Margin="0,0,5,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Hora Fin" TextWrapping="WrapWithOverflow" Height="45" Width="35" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <ComboBox Name="comboHoraZonaFin" Height="25" Margin="0,-7,0,-10" FontSize="12" Width="53">
+                                <ComboBoxItem Content="Hora" IsSelected="True"/>
+                                <ComboBoxItem Content="0"/>
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                                <ComboBoxItem Content="13"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="16"/>
+                                <ComboBoxItem Content="17"/>
+                                <ComboBoxItem Content="18"/>
+                                <ComboBoxItem Content="19"/>
+                                <ComboBoxItem Content="20"/>
+                                <ComboBoxItem Content="21"/>
+                                <ComboBoxItem Content="22"/>
+                                <ComboBoxItem Content="23"/>
+                            </ComboBox>
+                            <ComboBox Name="comboMinutosZonaFin" Height="25" Margin="0,-7,0,-10" FontSize="12">
+                                <ComboBoxItem Content="Minutos" IsSelected="True"/>
+                                <ComboBoxItem Content="00"/>
+                                <ComboBoxItem Content="15"/>
+                                <ComboBoxItem Content="30"/>
+                                <ComboBoxItem Content="45"/>
+                            </ComboBox>
+                            <TextBlock x:Name="txtIdEvento" Visibility="Hidden"/>
+                            <Label FontSize="18" Height="50" Width="65" HorizontalAlignment="Right" Margin="0,0,10,0" HorizontalContentAlignment="Right">
+                                <TextBlock Text="Ocupación (Pax)" TextWrapping="WrapWithOverflow" Height="45" Width="60" FontSize="11" Margin="0,-2,0,0"/>
+                            </Label>
+                            <TextBox x:Name="txtOcupacionPersonasZona" Grid.Row="0" Grid.Column="3" Width="50" Height="22" VerticalContentAlignment="Center" Margin="-10,0,0,0" FontSize="11" IsReadOnly="True"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="9" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="0,10,-10,-15">
+                            
+                            <Button x:Name="btnModificarZona"   Width="90" Height="35" Margin="25,0,0,0" FontSize="12" Click="btnModificarZona_Click"  >
+                                <TextBlock Text="Modificar   Zona" TextWrapping="Wrap" TextAlignment="Center" />
+                            </Button>
+                            <Button x:Name="btnCrearNuevaZona" Width="90" Height="35"  Margin="25,0,0,0" FontSize="12" Click="btnCrearNuevaZona_Cilck">
+                                <TextBlock Text="Crear Nueva Zona" TextWrapping="Wrap" TextAlignment="Center" />
+                            </Button>
+                            <Button x:Name="btnGuardarZonaCreada" Width="90" Height="35"  Margin="20,0,0,0" FontSize="12" Click="btnGuardarZonaCreada_Click">
+                                <TextBlock Text="Guardar Zona Creada" TextWrapping="Wrap" TextAlignment="Center" />
+                            </Button>
+                            <Button x:Name="btnEliminarZonaCreada"  Width="90" Height="35"  Margin="25,0,0,0" FontSize="12" Click="btnEliminarZonaCreada_Click" >
+                                <TextBlock Text="Eliminar Zona Creada" TextWrapping="Wrap" TextAlignment="Center" />
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical"  Grid.Row="11" Grid.ColumnSpan="6"  Margin="0,8,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="-8,10,0,0">
+                                <Border  Width="560" Height="135" BorderBrush="Black" BorderThickness="2" Margin="-80,0" >
+                                    <DataGrid x:Name="DataZonas" IsReadOnly="True" AutoGenerateColumns="False" Height="130" Width="555" CanUserSortColumns="False" SelectionChanged="DataZonas_SelectionChanged" Margin="0,0,0,0">
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="FontSize" Value="11"/>
+                                                <Setter Property="FontFamily" Value="DejaVu Serif Condensed"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Background" Value="Black"/>
+                                                <Setter Property="BorderBrush" Value="black"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                                <Setter Property="Margin" Value="-7,0,0,0"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding paintingZona}"  Value="25">
+                                                        <Setter Property="Background" Value="#FF0FEC0F"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding paintingZona}"  Value="35">
+                                                        <Setter Property="Background" Value="#FF078107"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding paintingZona}"  Value="55">
+                                                        <Setter Property="Background" Value="#FFE0F50C"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding paintingZona}"  Value="75">
+                                                        <Setter Property="Background" Value="#FFF5800C"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding paintingZona}"  Value="90">
+                                                        <Setter Property="Background" Value="#FFF50C0C"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                        <DataGrid.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.CellStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn x:Name="dataNombreZona"  Width="131" CanUserResize="False" Binding="{Binding nombreZona}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Nombre Zona" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataSituacionZona"  Width="50" CanUserResize="False" Binding="{Binding situacionZona}" Visibility="Hidden">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Situación" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataDibujada"  Width="25" CanUserResize="False" Binding="{Binding zonaDibujada}" Visibility="Hidden">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Dibu  jada" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn x:Name="dataMetrosZona"  Width="30" CanUserResize="False" Binding="{Binding metrosCuadradosZona}" Visibility="Hidden">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Mts2" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataAforoZona"  Width="40" CanUserResize="False" Binding="{Binding aforoZona}" >
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Aforo" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataOcupacionPersonasZona"  Width="35" CanUserResize="False" Binding="{Binding genteEnZona}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Ocupa  cion (PAX)" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataOcupacionZonaPorcentaje"  Width="48" CanUserResize="False" Binding="{Binding porcentajeOcupacionZona, StringFormat={}{0:0.00}%}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Ocupacion %" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataVisitasZona"  Width="35" CanUserResize="False" Binding="{Binding visitasZona}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Visitas" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataActivaZona" Width="25" CanUserResize="False" Binding="{Binding zonaActiva}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Acti  va" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataBloqueadaZona" Width="25" CanUserResize="False" Binding="{Binding zonaBloqueada}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Bloqueada" TextWrapping="Wrap"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataFechaInicioZona"  Width="105" CanUserResize="False" Binding="{Binding inicioZona}">
+                                            <DataGridTextColumn.Header>
+                                                <TextBlock Text="Fecha Inicio" TextWrapping="Wrap"/>
+                                            </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataFechaFinZona"  Width="105" CanUserResize="False" Binding="{Binding finZona}">
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text="Fecha Fin" TextWrapping="Wrap" />
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn x:Name="dataIdZona" Header="Id. Zona" CanUserResize="False" Binding="{Binding idZona}" Visibility="Hidden"/>
+                                            <DataGridTextColumn x:Name="dataPaintingZona" Header="Paint" CanUserResize="False" Binding="{Binding paintingZona}" Visibility="Hidden"/>
+                                        </DataGrid.Columns>
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="FontFamily" Value="Aharoni"/>
+                                                <Setter Property="Height" Value="37"/>
+                                                <Setter Property="Background" Value="Gray"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontSize" Value="8"/>
+                                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                                                <Setter Property="BorderBrush" Value="blue"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                    </DataGrid>
+                                </Border>
+                            </StackPanel>
+                            
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Row="10" Grid.ColumnSpan="6" Margin="0,5" >
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="15,15,10,0" />
+                            <StackPanel Orientation="Horizontal" Margin="20,10">
+                                <Button x:Name="btnInsertPlano"   Width="130" Height="40" Click="btnInsertPlano_Click" Margin="5,0,0,0" FontSize="11">
+                                    <TextBlock Text="Importar Nuevo Plano" TextWrapping="Wrap" TextAlignment="Center" />
+                                </Button>
+                                <Button x:Name="btnModificarEvento"  Width="130" Height="40" Margin="20,0,0,0" FontSize="11" Click="btnModificarEvento_Click">
+                                    <TextBlock Text="Guardar Modificaciones Evento" TextWrapping="wrap" TextAlignment="Center"/>
+                                </Button>
+                                <Button x:Name="btnDesactivarEvento"  Width="130" Height="40" Margin="20,0,0,0" FontSize="11" Background="Red" Click="btnDesactivarEvento_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Desactivar Evento" TextWrapping="wrap" TextAlignment="Center"/>
+                                        <Image Source="/proyecto_admin;component/img/warning.png" Width="20"/>
+                                    </StackPanel>
+                                    
+                                </Button>
+
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <Button x:Name="btnCreacionEventos" Content="Creación de Eventos" Background="Transparent" Foreground="Black" FontWeight="Normal" FontSize="12" Click="btnCreacionEventos_Click" />
+            </TabItem.Header>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <Button x:Name="btnMonitorEventos" Content="Monitor de Eventos Activos" Background="Transparent" Foreground="Black" FontWeight="Normal" FontSize="12" Click="btnMonitorEventos_Click" />
+            </TabItem.Header>
+        </TabItem>
+    </TabControl>
+
+</Window>

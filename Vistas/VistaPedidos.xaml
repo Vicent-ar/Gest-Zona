@@ -1,0 +1,65 @@
+﻿<Window x:Class="proyecto_admin.Vistas.VistaPedidos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyecto_admin.Vistas"
+        mc:Ignorable="d"
+        Title="VistaPedidos" Height="738" Width="1368"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.65*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.65*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <Border.Background>
+                <ImageBrush ImageSource="/proyecto_admin;component/img/llamas.jpg" />
+            </Border.Background>
+        </Border>
+        <ListBox  SelectionMode="Multiple" Name="ListBoxPedidos" Margin="50" Grid.RowSpan="2" BorderThickness="3" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#FFD87A7A" Opacity="0.8">
+
+        </ListBox>
+        <StackPanel Grid.Column="2">
+            <Button Margin="0,10,35,0" Width="150" Height="50" HorizontalAlignment="Right" Background="Red" FontWeight="Bold" FontSize="20" Click="Button_Click">Salir/Logout</Button>
+            <StackPanel Margin="0,5,0,0" Width="auto" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Label Foreground="wheat" Margin="10" Content="Buscar pedido por mesa" FontWeight="UltraBold" Grid.Column="2" HorizontalAlignment="Center" FontSize="30" Height="50" VerticalAlignment="Top"></Label>
+                <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Name="BuscarPedido" Grid.Column="2" FontSize="30" FontWeight="Bold" Height="40" Width="275" KeyDown="BuscarPedidoKeyDown"/>
+                    <Button  Width="100" Click="Button_BuscarPedido" Style="{x:Null}" Height="40" VerticalAlignment="Bottom">
+                        <Image Source="/proyecto_admin;component/img/descarga.png"></Image>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="0,20,0,0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Width="auto">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Wheat" TextWrapping="Wrap" Text="Nuevo pedido para la mesa: " FontWeight="UltraBold" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" ></TextBlock>
+                    <Label Foreground="White" Name="LabelNumeroMesa" FontSize="35" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Margin="0"></Label>
+                </StackPanel>
+                <Button Content="Crear Pedido" Foreground="Black" Background="#e5e5e5" Width="400" Height="60" Margin="15" FontWeight="Bold" FontSize="30" Click="Button_ClickNuevoPedido" >
+                    
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Editar Pedido" Background="#a8dadc" Width="200" Height="100" Margin="15" FontWeight="Bold" FontSize="25" Click="Button_ClickEditarPedido" >
+                    
+                </Button>
+                <Button Content="Cobrar Pedido" Background="#457b9d" Width="200" Height="100" Margin="15" FontWeight="Bold" FontSize="25" Click="Button_CobrarPedido" >
+                   
+                </Button>
+                <Button Content="Eliminar Pedido" Background="#e63946" Width="200" Height="100" Margin="15" FontWeight="Bold" FontSize="25" Click="Button_ClickEliminarPedido" >
+                    
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <Label Foreground="Wheat" Margin="5" Height="auto"  FontSize="24" FontWeight="Black" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2">Mesas</Label>
+        <ScrollViewer Grid.Row="2" Grid.Column="2" Margin="40,60,40,10">
+            <WrapPanel  Name="WrapMesas2">
+            </WrapPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
