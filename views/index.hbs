@@ -1,0 +1,99 @@
+<div class="col-md-6 offset-md-3">
+    <div class="card">
+        <div class="card-header">
+            <h1>Registro</h1>
+        </div>
+        <div class="card-body">
+            {{#if Zonas}}
+                <ul class="list-group">
+                    {{#each Zonas}}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">   
+                            <p>{{nombreEvento}} &nbsp / &nbsp  <strong>{{nombreZona}} </strong></p> 
+                            <input type="button" id="boton1" name="boton1" value="Elegir Zona" class="btn btn-danger" onclick="hola({{idZona}},'{{nombreZona}}','{{nombreEvento}}');">
+                            
+                        </li>
+                        <li id="pie">   
+                            <p>&nbsp  &nbsp Cierre de la zona: {{finZona}} </p>
+                        </li>
+                    {{/each}}
+                </ul>                
+            {{else}}
+            <p>No registrado<p>
+            {{/if}}
+        </div>
+        <div class="card-footer">
+            <form action="/new-contact" method="POST" id="form">
+                <div class="form group">
+                    <input type="text" name="firstname" placeholder="Nombre" class="form-control" autofocus>
+                </div>
+                <p></p>
+                 <div class="form group">
+                    <input type="text" name="lastname" placeholder="Apellidos" class="form-control">
+                </div>
+                <p></p>
+                 <div class="form group">
+                    <input type="number" name="age" placeholder="Edad" class="form-control">
+                </div>
+                <p></p>
+                 <div class="form group">
+                    <input type="text" name="identityCard" placeholder="DNI" class="form-control">
+                </div>
+                <p></p>
+                <div class="form group">
+                    <input type="hidden" id="zoneImput" name="zoneSelected" placeholder="Zona elegida" class="form-control" readonly>
+                </div>
+                <p></p>
+                <button class="btn btn-primary btn-block" onclick="return validarEdad(age, firstname, lastname, identityCard, zoneSelected);" >
+                    Registrarse
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function hola(entrada, nombreZ, nombreE){
+        var inputZone=document.getElementById("zoneImput");
+        inputZone.value=entrada;
+        var nombreZn=nombreZ;
+        var nombreEv=nombreE;
+        alert('Ha solicitado registrarse en la zona '+nombreZn+ ' del evento ' +nombreEv+ '. Si la Zona elegida es la correcta RELLENE EL FORMULARIO y pulse REGISTRARSE. En caso de haberse equivocado pulse de nuevo en el botón de la Zona deseada.' );
+    }
+    function validarEdad(edad, firstname, lastname, identityCard, zoneSelected){
+        var ageIn=edad.value;    
+        const formulario = document.getElementById("form");
+        var dni=identityCard.value;
+        var numero;
+        var letr;
+        var letra;
+        var expresion_regular_dni;
+        expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+        if (firstname.value==""){
+            alert('Debe introducir un nombre.');
+            return false;
+        }else if(lastname.value==""){
+                alert('Debe introducir los apellidos.');
+                return false;      
+            }else if (ageIn<5|ageIn>105){
+                    alert('El campo EDAD debe ser numérico y estar entre 5 y 105');
+                    return false;                
+                    }else if(expresion_regular_dni.test (dni) == true){
+                        numero = dni.substr(0,dni.length-1);
+                        letr = dni.substr(dni.length-1,1);
+                        numero = numero % 23;
+                        letra='TRWAGMYFPDXBNJZSQVHLCKET';
+                        letra=letra.substring(numero,numero+1);
+                        if (letra!=letr.toUpperCase()) {
+                        alert('Dni erroneo, la letra del NIF no se corresponde');
+                        return false;
+                        }else if(zoneSelected.value==""){
+                           alert('Debe pulsar el botón de la Zona donde desee registrarse');
+                           return false;
+                        }else{
+                            return true;
+                        }
+                    }else{
+                    alert('Dni erroneo, formato no válido');
+                    return false;
+                    }          
+    }
+</script>
