@@ -1,0 +1,23 @@
+﻿<Window x:Class="proyecto_admin.Vistas.AyudaGestEvento.Ayuda3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proyecto_admin.Vistas.AyudaGestEvento"
+        mc:Ignorable="d"
+        Title="Ayuda3" Height="738" Width="1368"
+        WindowState="Maximized">
+    <Grid>
+        <Image Source="/proyecto_admin;component/img/Ayuda/Ayuda3.JPG" Stretch="Fill"/>
+        <Grid>
+            <Button x:Name="btnDrcha" Height="60" Width="120" Background="Transparent" Margin="700,600,0,0" Click="btnDrcha_Click">
+                <Image Source="/proyecto_admin;component/img/flechaIzda.png"/>
+            </Button>
+            <Button x:Name="btnIzda" Height="60" Width="120" Background="Transparent" Margin="1100,600,0,0" Click="btnIzda_Click" >
+                <Image Source="/proyecto_admin;component/img/flechaDcha.png"/>
+            </Button>
+            <Button x:Name="btnSalir" Content="Salir" Height="50" Width="90" Margin="900,600,0,0" Click="btnSalir_Click" />
+        </Grid>
+
+    </Grid>
+</Window>
